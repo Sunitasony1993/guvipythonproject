@@ -1,43 +1,40 @@
 from tkinter import *
-import tkinter as tk
+import tkinter
 import math
-root = tk.Tk()
+root = Tk()
 root.title("calculator")
-root.geometry("400*360")
-root.resizeable(0, 0)
+
 font = ('Arial Bold', 17)
 equation = " "
+def calculate():
+    ex = entry_result.get()
+    try:
+        result = eval(ex)
+        ans = round(result, 1)
+        entry_result.delete(0, END)
+        entry_result.insert(0, ans)
+    except ZeroDivisionError:
+        entry_result.delete(0, END)
+        entry_result.insert(0, 'ZeroDivisionError')
 
 def button_press(value):
-    global equation
-    user = entry_result.get()
-    equation += value
-    if value=='x2':
-        result == eval(equation)**2
-
-    entry_result.config(text=equation)
-
+    entry_result.insert(END, value)
 def clear():
-    global equation
-    equation = " "
-    entry_result.config(text=0)
+    entry_result.delete(0, END)
 
-def calculate():
-    global equation
-    result = ""
-    if equation != " ":
-        try:
-            result = eval(equation)
-        except:
-            result = "Error"
-            equation = " "
+def square(value):
+    ex = entry_result.get()
+    if value == "x2":
+        ans = eval(ex) ** 2
+    elif value == "x3":
+        ans = eval(ex) ** 3
 
-        entry_result.config(text=result)
+
 
 
 entry_result = Entry(root, text="", font=font, bg="#21618C", bd=12,
                      fg="#FBFCFC", relief=SUNKEN, width=26)
-entry_result.grid(columnspan=5)
+entry_result.grid(row=0, column=0, columnspan=5)
 clear_result = Button(root, text="C", font=font, background="red", relief=SUNKEN,
                       fg="blue", height=2, width=2, command=lambda: clear())
 clear_result.grid(row=1, column=1, sticky='w')
